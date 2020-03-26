@@ -5,7 +5,6 @@
 %% mean
    
 figure
-% legend
 if (find(strcmp(methods,'MC')))
     semilogx(NsamplesMC, mean_MC, 'x-','Linewidth', 2); %, 'Color', myColors(1,:));
     hold on
@@ -60,8 +59,6 @@ end
 xlabel('N') % Add proper labelling and a legend
 grid on;
 title('Standard deviation')
-
-
 
 
 %% error in mean

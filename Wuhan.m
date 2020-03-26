@@ -47,6 +47,8 @@ gamma = 1./18.; % https://www.imperial.ac.uk/mrc-global-infectious-disease-analy
 % X(7) = gamma or 1/gamma
 % X(8) = Rzero multiplier
 
+ndim = 8;
+
 % marginal distribution X1
 Input.Marginals(1).Name = 'S_0';
 Input.Marginals(1).Type = 'Constant'; 

@@ -22,9 +22,9 @@ plot_solutions = 0;
 
 input_file = 'Wuhan.m';
 
-methods = {'MC','PCE_OLS','PCE_LARS'}; % specify which methods should be run
-
-ndim = 8;
+% specify which methods should be run
+% pick from: 'MC','PCE_OLS','PCE_LARS','PCE_Quad'
+methods = {'MC','PCE_OLS','PCE_LARS'}; 
 
 % for Monte Carlo, specify number of times to repeat MC-based methods to obtain 'nice' convergence
 % graphs
