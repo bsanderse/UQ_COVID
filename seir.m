@@ -1,4 +1,5 @@
 function  yprime = seir(t,y, params)
+% this code is using the model from the work of Peter Forsyth, see https://cs.uwaterloo.ca/~paforsyt/SEIR.html
 
 %
 %    dS/dt = -beta*S*I/N

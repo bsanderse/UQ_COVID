@@ -1,5 +1,6 @@
 function [QoI,solution] = solve_corona(X,P)
-%
+% This code is using the model from the work of Peter Forsyth, see https://cs.uwaterloo.ca/~paforsyt/SEIR.html
+
 %   This code is can be run using
 %        Matlab (commercial package)
 %        Octave (open source version)
