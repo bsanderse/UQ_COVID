@@ -155,61 +155,63 @@ end
 % grid on;
 % title('Comparison of Sobol indices')
 % 
-% %% bar chart of Sobol indices
-% figure
-% hold on
-% 
-% n_methods = length(methods);
-% bar_width = 0.5/n_methods;
-% bar_vec   = 1:n_methods;
-% coords    = (bar_vec - mean(bar_vec))*bar_width;
-% k         = 1;
-% if (find(strcmp(methods,'MC')))
-%     if(length(NsamplesMC)==1)
-%         uq_bar((1:ndim)+ coords(k), AVG_Sobol_MC_Total(:,end), bar_width, 'FaceColor', cmap(k,:), 'EdgeColor', 'none')
-%     else
-%         uq_bar((1:ndim)+ coords(k), AVG_Sobol_MC_Total(end,:), bar_width, 'FaceColor', cmap(k,:), 'EdgeColor', 'none')
-%     end
-%     k = k+1;
-% end
-% 
-% if (find(strcmp(methods,'PCE_Quad')))
-%     uq_bar((1:ndim)+ coords(k), Sobol_Quad_Total(end,:), bar_width, 'FaceColor', cmap(k,:), 'EdgeColor', 'none')
-%     k = k+1;
-% end
-% 
-% if (find(strcmp(methods,'PCE_OLS')))
-%     if(length(NsamplesOLS)==1)
-%         uq_bar((1:ndim)+ coords(k), AVG_Sobol_OLS_Total(:,end), bar_width, 'FaceColor', cmap(k,:), 'EdgeColor', 'none')
-%     else
-%        uq_bar((1:ndim)+ coords(k), AVG_Sobol_OLS_Total(end,:), bar_width, 'FaceColor', cmap(k,:), 'EdgeColor', 'none') 
-%     end    
-%     k = k+1;
-% end
-% 
-% if (find(strcmp(methods,'PCE_LARS')))
-%     if(length(NsamplesLARS)==1)
-%         uq_bar((1:ndim)+ coords(k), AVG_Sobol_LARS_Total(:,end), bar_width, 'FaceColor', cmap(k,:), 'EdgeColor', 'none')
-%     else
-%         uq_bar((1:ndim)+ coords(k), AVG_Sobol_LARS_Total(end,:), bar_width, 'FaceColor', cmap(k,:), 'EdgeColor', 'none')
-%     end
-%     k = k+1;
-% end
-% 
-% % uq_bar((1:ndim)+0.25, mySobolResultsLRA.Total, 0.25,...
-% %     'FaceColor', cm(64,:), 'EdgeColor', 'none')
-% % uq_setInterpreters(gca)
-% % set(gca, 'XTick', 1:length(Input.Marginals),...
-% %     'XTickLabel', SobolResults_Quad.VariableNames, 'FontSize', 14)
-% 
-% % uq_legend({...
-% %     sprintf('MC based (%.0e simulations)', NsamplesMC(end)),...
-% %     sprintf('PCE-based (%d simulations)', myPCE_Quad.ExpDesign.NSamples)})
-% 
-% % uq_legend({sprintf('PCE-based (%d simulations)', myPCE_Quad.ExpDesign.NSamples)})
-% legend(methods, 'Interpreter', 'none')
-% ylabel('Total order Sobol index');
-% ylim([0 1])
+%% bar chart of Sobol indices
+figure
+cmap = get(gca,'ColorOrder');
+
+hold on
+
+n_methods = length(methods);
+bar_width = 0.5/n_methods;
+bar_vec   = 1:n_methods;
+coords    = (bar_vec - mean(bar_vec))*bar_width;
+k         = 1;
+if (find(strcmp(methods,'MC')))
+    if(length(NsamplesMC)==1)
+        uq_bar((1:ndim)+ coords(k), AVG_Sobol_MC_Total(:,end), bar_width, 'FaceColor', cmap(k,:), 'EdgeColor', 'none')
+    else
+        uq_bar((1:ndim)+ coords(k), AVG_Sobol_MC_Total(end,:), bar_width, 'FaceColor', cmap(k,:), 'EdgeColor', 'none')
+    end
+    k = k+1;
+end
+
+if (find(strcmp(methods,'PCE_Quad')))
+    uq_bar((1:ndim)+ coords(k), Sobol_Quad_Total(end,:), bar_width, 'FaceColor', cmap(k,:), 'EdgeColor', 'none')
+    k = k+1;
+end
+
+if (find(strcmp(methods,'PCE_OLS')))
+    if(length(NsamplesOLS)==1)
+        uq_bar((1:ndim)+ coords(k), AVG_Sobol_OLS_Total(:,end), bar_width, 'FaceColor', cmap(k,:), 'EdgeColor', 'none')
+    else
+       uq_bar((1:ndim)+ coords(k), AVG_Sobol_OLS_Total(end,:), bar_width, 'FaceColor', cmap(k,:), 'EdgeColor', 'none') 
+    end    
+    k = k+1;
+end
+
+if (find(strcmp(methods,'PCE_LARS')))
+    if(length(NsamplesLARS)==1)
+        uq_bar((1:ndim)+ coords(k), AVG_Sobol_LARS_Total(:,end), bar_width, 'FaceColor', cmap(k,:), 'EdgeColor', 'none')
+    else
+        uq_bar((1:ndim)+ coords(k), AVG_Sobol_LARS_Total(end,:), bar_width, 'FaceColor', cmap(k,:), 'EdgeColor', 'none')
+    end
+    k = k+1;
+end
+
+% uq_bar((1:ndim)+0.25, mySobolResultsLRA.Total, 0.25,...
+%     'FaceColor', cm(64,:), 'EdgeColor', 'none')
+% uq_setInterpreters(gca)
+set(gca, 'XTick', 1:length(Input.Marginals),...
+    'XTickLabel', SobolResults_MC.VariableNames, 'FontSize', 14)
+
+% uq_legend({...
+%     sprintf('MC based (%.0e simulations)', NsamplesMC(end)),...
+%     sprintf('PCE-based (%d simulations)', myPCE_Quad.ExpDesign.NSamples)})
+
+% uq_legend({sprintf('PCE-based (%d simulations)', myPCE_Quad.ExpDesign.NSamples)})
+legend(methods, 'Interpreter', 'none')
+ylabel('Total order Sobol index');
+ylim([0 1])
 
 %% plot the polynomial response surface for PCE quadrature-based 
 % 

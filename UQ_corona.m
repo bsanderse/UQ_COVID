@@ -30,19 +30,22 @@ methods = {'MC','PCE_OLS','PCE_LARS'};
 % graphs
 MC_repeat = 1;
 % number of samples with MC
-NsamplesMC = [5 10 20 40 80 160 320]; %[1e1 1e2 1e3 1e4];
+NsamplesMC = [5 10 20 40 80]; % 160 320]; %[1e1 1e2 1e3 1e4];
 
 % for PCE-Quad, specify the polynomial degrees to be tested
 DegreesQuad = 1:3; %[1 2 3 4 5 6];
 
 % for PCE-OLS:
-NsamplesOLS = [5 10 20 40 80 160 320]; % if not specified, the number of samples from Quad is taken
+NsamplesOLS = [5 10 20 40 80];% 160 320]; % if not specified, the number of samples from Quad is taken
 OLS_repeat = 1; % like MC_repeat
 
 % for PCE-LARS:
-NsamplesLARS = [5 10 20 40 80 160 320]; % if not specified, the number of samples from Quad is taken
+NsamplesLARS = [5 10 20 40 80];% 160 320]; % if not specified, the number of samples from Quad is taken
 LARS_repeat = 1; % like MC_repeat
 
+SobolOpts.Type        = 'Sensitivity';
+SobolOpts.Method      = 'Sobol';
+SobolOpts.Sobol.Order = 1;
 
 % if available, give exact mean and std
 % mean_exact = 
@@ -120,18 +123,18 @@ if (find(strcmp(methods,'MC')))
             std_MC(k,i)  = std(Y_ED);
             
             % Sobol analysis; 
-%             SobolOpts.Sobol.SampleSize = NsamplesMC(i);
-%             SobolAnalysis_MC           = uq_createAnalysis(SobolOpts);
-%             SobolResults_MC            = SobolAnalysis_MC.Results;
-%             Sobol_MC_FirstOrder(k,i,1:ndim) = SobolResults_MC.FirstOrder;
-%             Sobol_MC_Total(k,i,1:ndim)      = SobolResults_MC.Total;     
-%             Sobol_MC_Nsamples(i)          = SobolResults_MC.Cost;
+            SobolOpts.Sobol.SampleSize = NsamplesMC(i);
+            SobolAnalysis_MC           = uq_createAnalysis(SobolOpts);
+            SobolResults_MC            = SobolAnalysis_MC.Results;
+            Sobol_MC_FirstOrder(k,i,1:ndim) = SobolResults_MC.FirstOrder;
+            Sobol_MC_Total(k,i,1:ndim)      = SobolResults_MC.Total;     
+            Sobol_MC_Nsamples(i)          = SobolResults_MC.Cost;
         end
     end
     
     % take average over first dimension (multiple MC runs)
-%     AVG_Sobol_MC_FirstOrder = squeeze(mean(Sobol_MC_FirstOrder,1));
-%     AVG_Sobol_MC_Total      = squeeze(mean(Sobol_MC_Total,1));
+    AVG_Sobol_MC_FirstOrder = squeeze(mean(Sobol_MC_FirstOrder,1));
+    AVG_Sobol_MC_Total      = squeeze(mean(Sobol_MC_Total,1));
 %     
     if (compare_mean == 1)
         err_mean_MC = abs((mean(mean_MC,1)-mean_exact)/mean_ref);
@@ -175,10 +178,10 @@ if (find(strcmp(methods,'PCE_Quad')))
         
         % Sobol analysis
         % note the same options structure SobolOpts can be re-used to create a new analysis on the PCE model        
-%         SobolAnalysis_Quad    = uq_createAnalysis(SobolOpts);
-%         SobolResults_Quad     = SobolAnalysis_Quad.Results;
-%         Sobol_Quad_FirstOrder(i,1:ndim) = SobolResults_Quad.FirstOrder;
-%         Sobol_Quad_Total(i,1:ndim)      = SobolResults_Quad.Total;
+        SobolAnalysis_Quad    = uq_createAnalysis(SobolOpts);
+        SobolResults_Quad     = SobolAnalysis_Quad.Results;
+        Sobol_Quad_FirstOrder(i,1:ndim) = SobolResults_Quad.FirstOrder;
+        Sobol_Quad_Total(i,1:ndim)      = SobolResults_Quad.Total;
     end
     
     if (compare_mean == 1)
@@ -240,17 +243,17 @@ if (find(strcmp(methods,'PCE_OLS')))
             
             % Sobol analysis
             % note the same options structure SobolOpts can be re-used to create a new analysis on the PCE model
-%             SobolAnalysis_OLS    = uq_createAnalysis(SobolOpts);
-%             SobolResults_OLS     = SobolAnalysis_OLS.Results;
-%             Sobol_OLS_FirstOrder(k,i,1:ndim) = SobolResults_OLS.FirstOrder;
-%             Sobol_OLS_Total(k,i,1:ndim)      = SobolResults_OLS.Total;
+            SobolAnalysis_OLS    = uq_createAnalysis(SobolOpts);
+            SobolResults_OLS     = SobolAnalysis_OLS.Results;
+            Sobol_OLS_FirstOrder(k,i,1:ndim) = SobolResults_OLS.FirstOrder;
+            Sobol_OLS_Total(k,i,1:ndim)      = SobolResults_OLS.Total;
         end
         
     end
     
     % take average over first dimension (multiple OLS runs)
-%     AVG_Sobol_OLS_FirstOrder = squeeze(mean(Sobol_OLS_FirstOrder,1));
-%     AVG_Sobol_OLS_Total      = squeeze(mean(Sobol_OLS_Total,1));
+    AVG_Sobol_OLS_FirstOrder = squeeze(mean(Sobol_OLS_FirstOrder,1));
+    AVG_Sobol_OLS_Total      = squeeze(mean(Sobol_OLS_Total,1));
     
     % take mean over first dimension (k)
     if (compare_mean == 1)
@@ -314,17 +317,17 @@ if (find(strcmp(methods,'PCE_LARS')))
             std_LARS(k,i)  = sqrt(myPCE_LARS.PCE.Moments.Var);
  
             % Sobol analysis
-            % note the same options structure SobolOpts can be re-used to create a new analysis on the PCE model
-%             SobolAnalysis_LARS    = uq_createAnalysis(SobolOpts);
-%             SobolResults_LARS     = SobolAnalysis_LARS.Results;
-%             Sobol_LARS_FirstOrder(k, i, 1:ndim) = SobolResults_LARS.FirstOrder;
-%             Sobol_LARS_Total(k, i, 1:ndim)      = SobolResults_LARS.Total;
+%             note the same options structure SobolOpts can be re-used to create a new analysis on the PCE model
+            SobolAnalysis_LARS    = uq_createAnalysis(SobolOpts);
+            SobolResults_LARS     = SobolAnalysis_LARS.Results;
+            Sobol_LARS_FirstOrder(k, i, 1:ndim) = SobolResults_LARS.FirstOrder;
+            Sobol_LARS_Total(k, i, 1:ndim)      = SobolResults_LARS.Total;
         end
     end
     
     % take average over first dimension (multiple LARS runs)
-%     AVG_Sobol_LARS_FirstOrder = squeeze(mean(Sobol_LARS_FirstOrder,1));
-%     AVG_Sobol_LARS_Total      = squeeze(mean(Sobol_LARS_Total,1));
+    AVG_Sobol_LARS_FirstOrder = squeeze(mean(Sobol_LARS_FirstOrder,1));
+    AVG_Sobol_LARS_Total      = squeeze(mean(Sobol_LARS_Total,1));
     
     if (compare_mean == 1)
         err_mean_LARS =  abs((mean(mean_LARS,1)-mean_exact)/mean_ref);
