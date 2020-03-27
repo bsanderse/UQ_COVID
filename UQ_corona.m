@@ -24,13 +24,15 @@ input_file = 'Wuhan.m';
 
 % specify which methods should be run
 % pick from: 'MC','PCE_OLS','PCE_LARS','PCE_Quad'
-methods = {'MC','PCE_OLS','PCE_LARS'}; 
+% methods = {'MC','PCE_OLS','PCE_LARS'}; 
+methods = {'PCE_LARS'}; 
+
 
 % for Monte Carlo, specify number of times to repeat MC-based methods to obtain 'nice' convergence
 % graphs
 MC_repeat = 1;
 % number of samples with MC
-NsamplesMC = [5 10 20 40 80 160 320]; %[1e1 1e2 1e3 1e4];
+NsamplesMC = [5 10 20 40 80]; % 160 320]; %[1e1 1e2 1e3 1e4];
 
 % for PCE-Quad, specify the polynomial degrees to be tested
 DegreesQuad = 1:3; %[1 2 3 4 5 6];
@@ -40,7 +42,7 @@ NsamplesOLS = [5 10 20 40 80 160 320]; % if not specified, the number of samples
 OLS_repeat = 1; % like MC_repeat
 
 % for PCE-LARS:
-NsamplesLARS = [5 10 20 40 80 160 320]; % if not specified, the number of samples from Quad is taken
+NsamplesLARS = 320; %[5 10 20 40 80 160 320]; % if not specified, the number of samples from Quad is taken
 LARS_repeat = 1; % like MC_repeat
 
 SobolOpts.Type        = 'Sensitivity';
@@ -337,6 +339,7 @@ if (find(strcmp(methods,'PCE_LARS')))
     end
     
 end
+
 
 
 %%

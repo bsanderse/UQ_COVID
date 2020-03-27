@@ -8,6 +8,34 @@ linewidth = 2;
     
 set(0,'defaultlinelinewidth',linewidth)
 
+%% 
+% get PDF of output
+
+% need a PCE surrogate to sample from:
+if (find(strcmp(methods,'PCE_Quad') || find(strcmp(methods,'PCE_OLS')) || find(strcmp(methods,'PCE_LARS')) )
+    % sample from the PCE (this is cheap)
+    N_PP = 1e5;
+    X_PP = uq_getSample(N_PP,'MC');
+    
+    Y_PP = uq_evalModel(X_PP);
+
+    ylims = ylim;
+
+    sp = figure;
+    set(sp,'DefaultAxesFontSize',fontsize,'DefaultAxesFontName',fontname);
+    set(sp,'defaultTextFontName', fontname)
+
+    histogram(Y_PP,'Normalization','probability')
+    hold on
+    plot([mean_LARS(end);mean_LARS(end)],ylim,'k-')
+    plot([mean_LARS(end)+std_LARS(end);mean_LARS(end)+std_LARS(end)],ylim,'k--')
+    plot([mean_LARS(end)-std_LARS(end);mean_LARS(end)-std_LARS(end)],ylim,'k--')
+    xlabel('peak value of active cases');
+    ylabel('probability of occurence');
+
+end
+
+
 %% mean
    
 sp = figure;
