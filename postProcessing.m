@@ -12,7 +12,7 @@ set(0,'defaultlinelinewidth',linewidth)
 % get PDF of output
 
 % need a PCE surrogate to sample from:
-if (find(strcmp(methods,'PCE_Quad') || find(strcmp(methods,'PCE_OLS')) || find(strcmp(methods,'PCE_LARS')) )
+if (strcmp(methods,'PCE_Quad') || strcmp(methods,'PCE_OLS') || strcmp(methods,'PCE_LARS')) 
     % sample from the PCE (this is cheap)
     N_PP = 1e5;
     X_PP = uq_getSample(N_PP,'MC');
