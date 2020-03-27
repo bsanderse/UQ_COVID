@@ -21,10 +21,13 @@ t_end   = 180; % in days
 c = 0.0;     % no mutation (yet)
              % maybe this happens later?
 
-sigma = 1./5.2;   %  https://doi.org/10.1056/NEJMoa2001316 (2020).
+% sigma = 1./5.2;   %  https://doi.org/10.1056/NEJMoa2001316 (2020).
+sigma_inv = 5.2;
+sigma = 1/sigma_inv;
 
-gamma = 1./18.; % https://www.imperial.ac.uk/mrc-global-infectious-disease-analysis/news–wuhan-coronavirus
-
+% gamma = 1./18.; % https://www.imperial.ac.uk/mrc-global-infectious-disease-analysis/news–wuhan-coronavirus
+gamma_inv = 18;
+gamma = 1./gamma_inv;
 
 
 %% R_zero array
@@ -51,19 +54,23 @@ ndim = 8;
 
 % marginal distribution X1
 Input.Marginals(1).Name = 'S_0';
-Input.Marginals(1).Type = 'Constant'; 
-Input.Marginals(1).Parameters = S_0;
+Input.Marginals(1).Type = 'Uniform'; 
+Input.Marginals(1).Parameters = [0.9*S_0 1.1*S_0];
+% Input.Marginals(1).Type = 'Constant'; 
+% Input.Marginals(1).Parameters = S_0;
 
 % marginal distribution X2
 Input.Marginals(2).Name = 'E_0';
-Input.Marginals(2).Type = 'Constant'; 
-Input.Marginals(2).Parameters = E_0; %[0.9*E_0 1.1*E_0]; 
+% Input.Marginals(2).Type = 'Constant'; 
+Input.Marginals(2).Type = 'Uniform'; 
+Input.Marginals(2).Parameters = [0.9*E_0 1.1*E_0]; 
 % Input.Marginals(2).Bounds = [0.9*E_0 1.1*E_0]; 
 
 % marginal distribution X3
 Input.Marginals(3).Name = 'I_0';
-Input.Marginals(3).Type = 'Constant'; 
-Input.Marginals(3).Parameters = I_0; %[0.9*I_0 1.1*I_0]; % scale and shape parameter
+Input.Marginals(3).Type = 'Uniform'; 
+Input.Marginals(3).Parameters = [0.9*I_0 1.1*I_0]; 
+% Input.Marginals(3).Parameters = I_0; %[0.9*I_0 1.1*I_0]; % scale and shape parameter
 % Input.Marginals(3).Bounds = [0.9*I_0 1.1*I_0]; % scale and shape parameter
 
 % marginal distribution X4
@@ -73,18 +80,20 @@ Input.Marginals(4).Parameters = R_0;
 
 % marginal distribution X5
 Input.Marginals(5).Name = 'c';
-Input.Marginals(5).Type = 'Constant'; 
-Input.Marginals(5).Parameters = c;
+Input.Marginals(5).Type = 'Uniform'; 
+Input.Marginals(5).Parameters = [0.9*c 1.1*c];
+% Input.Marginals(5).Type = 'Constant'; 
+% Input.Marginals(5).Parameters = c;
 
 % marginal distribution X6
 Input.Marginals(6).Name = 'sigma_{inv}';
 Input.Marginals(6).Type = 'Uniform'; 
-Input.Marginals(6).Parameters = [4 7];
+Input.Marginals(6).Parameters = [0.9*sigma_inv 1.1*sigma_inv]; %[4 7];
 
 % marginal distribution X7
 Input.Marginals(7).Name = 'gamma_{inv}';
 Input.Marginals(7).Type = 'Uniform'; 
-Input.Marginals(7).Parameters = [15 22];
+Input.Marginals(7).Parameters = [0.9*gamma_inv 1.1*gamma_inv]; %[15 22];
 
 % marginal distribution X8
 Input.Marginals(8).Name = 'Rzero';

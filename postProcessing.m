@@ -2,9 +2,17 @@
 % uq_figure('Position', [50 50 500 400]);
 % myColors = uq_cmap(2);
 
+fontsize = 14;
+fontname = 'Helvetica'; 
+linewidth = 2;
+    
+set(0,'defaultlinelinewidth',linewidth)
+
 %% mean
    
-figure
+sp = figure;
+set(sp,'DefaultAxesFontSize',fontsize,'DefaultAxesFontName',fontname);
+set(sp,'defaultTextFontName', fontname)
 if (find(strcmp(methods,'MC')))
     semilogx(NsamplesMC, mean_MC, 'x-','Linewidth', 2); %, 'Color', myColors(1,:));
     hold on
@@ -26,13 +34,17 @@ if (find(strcmp(methods,'PCE_LARS')))
     legappend('PCE-LARS')    
 end
 xlabel('N') % Add proper labelling and a legend
+ylabel('Maximum of active cases - mean');
 % legend({'Monte Carlo','PCE - quadrature','PCE - least squares','PCE - LARS'})
 grid on;
 title('Mean')
 
 %% standard deviation
    
-figure
+sp = figure;
+set(sp,'DefaultAxesFontSize',fontsize,'DefaultAxesFontName',fontname);
+set(sp,'defaultTextFontName', fontname)
+
 if (find(strcmp(methods,'MC')))
     semilogx(NsamplesMC, std_MC, 'x-','Linewidth', 2); %, 'Color', myColors(1,:));
     hold on
@@ -57,6 +69,7 @@ if (find(strcmp(methods,'PCE_LARS')))
     
 end
 xlabel('N') % Add proper labelling and a legend
+ylabel('Maximum of active cases - std');
 grid on;
 title('Standard deviation')
 
@@ -117,44 +130,44 @@ end
 
 
 %% Convergence of Sobol indices
-% figure
-% cmap = get(gca,'ColorOrder');
-% 
-% if (find(strcmp(methods,'MC')))
-%     if(size(AVG_Sobol_MC_Total,2)>1)
-% %         semilogx(Sobol_MC_Nsamples', AVG_Sobol_MC_Total(:, 1:end-1), 'x-','Linewidth', 2, 'Color', cmap(1,:), 'HandleVisibility','off');
-%         semilogx(NsamplesMC', AVG_Sobol_MC_Total(:, 1:end-1), 'x-','Linewidth', 2, 'Color', cmap(1,:), 'HandleVisibility','off');       
-%         hold on
-%     end
-%     semilogx(NsamplesMC', AVG_Sobol_MC_Total(:, end), 'x-','Linewidth', 2, 'Color', cmap(1,:));  
-% end
-% if (find(strcmp(methods,'PCE_Quad')))
-%     if(size(Sobol_Quad_Total,2)>1)
-%         semilogx(NsamplesQuad', Sobol_Quad_Total(:, 1:end-1), 's-','Linewidth', 2,'Color', cmap(2,:), 'HandleVisibility','off');
-%         hold on
-%     end
-%     semilogx(NsamplesQuad', Sobol_Quad_Total(:, end), 's-','Linewidth', 2,'Color', cmap(2,:));
-% end
-% if (find(strcmp(methods,'PCE_OLS')))
-%     if(size(AVG_Sobol_OLS_Total,2)>1)
-%         semilogx(NsamplesOLS, AVG_Sobol_OLS_Total(:, 1:end-1), 'o-','Linewidth', 2,'Color', cmap(3,:), 'HandleVisibility','off');
-%         hold on
-%     end
-%     semilogx(NsamplesOLS, AVG_Sobol_OLS_Total(:, end), 'o-','Linewidth', 2,'Color', cmap(3,:));
-% end
-% if (find(strcmp(methods,'PCE_LARS')))
-%     if(size(AVG_Sobol_LARS_Total,2)>1)
-%         semilogx(NsamplesLARS, AVG_Sobol_LARS_Total(:, 1:end-1), 'd-','Linewidth', 2,'Color', cmap(4,:), 'HandleVisibility','off');
-%         hold on
-%     end
-%     semilogx(NsamplesLARS, AVG_Sobol_LARS_Total(:,end), 'd-','Linewidth', 2,'Color', cmap(4,:));
-% end
-% xlabel('N') % Add proper labelling and a legend
-% legend(methods, 'Interpreter', 'none')
-% ylabel('Total index');
-% grid on;
-% title('Comparison of Sobol indices')
-% 
+figure
+cmap = get(gca,'ColorOrder');
+
+if (find(strcmp(methods,'MC')))
+    if(size(AVG_Sobol_MC_Total,2)>1)
+%         semilogx(Sobol_MC_Nsamples', AVG_Sobol_MC_Total(:, 1:end-1), 'x-','Linewidth', 2, 'Color', cmap(1,:), 'HandleVisibility','off');
+        semilogx(NsamplesMC', AVG_Sobol_MC_Total(:, 1:end-1), 'x-','Linewidth', 2, 'Color', cmap(1,:), 'HandleVisibility','off');       
+        hold on
+    end
+    semilogx(NsamplesMC', AVG_Sobol_MC_Total(:, end), 'x-','Linewidth', 2, 'Color', cmap(1,:));  
+end
+if (find(strcmp(methods,'PCE_Quad')))
+    if(size(Sobol_Quad_Total,2)>1)
+        semilogx(NsamplesQuad', Sobol_Quad_Total(:, 1:end-1), 's-','Linewidth', 2,'Color', cmap(2,:), 'HandleVisibility','off');
+        hold on
+    end
+    semilogx(NsamplesQuad', Sobol_Quad_Total(:, end), 's-','Linewidth', 2,'Color', cmap(2,:));
+end
+if (find(strcmp(methods,'PCE_OLS')))
+    if(size(AVG_Sobol_OLS_Total,2)>1)
+        semilogx(NsamplesOLS, AVG_Sobol_OLS_Total(:, 1:end-1), 'o-','Linewidth', 2,'Color', cmap(3,:), 'HandleVisibility','off');
+        hold on
+    end
+    semilogx(NsamplesOLS, AVG_Sobol_OLS_Total(:, end), 'o-','Linewidth', 2,'Color', cmap(3,:));
+end
+if (find(strcmp(methods,'PCE_LARS')))
+    if(size(AVG_Sobol_LARS_Total,2)>1)
+        semilogx(NsamplesLARS, AVG_Sobol_LARS_Total(:, 1:end-1), 'd-','Linewidth', 2,'Color', cmap(4,:), 'HandleVisibility','off');
+        hold on
+    end
+    semilogx(NsamplesLARS, AVG_Sobol_LARS_Total(:,end), 'd-','Linewidth', 2,'Color', cmap(4,:));
+end
+xlabel('N') % Add proper labelling and a legend
+legend(methods, 'Interpreter', 'none')
+ylabel('Total index');
+grid on;
+title('Comparison of Sobol indices')
+
 %% bar chart of Sobol indices
 figure
 cmap = get(gca,'ColorOrder');
