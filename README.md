@@ -1,5 +1,4 @@
-# UQ_COVID
-Uncertainty quantification (UQ) on COVID ODE model
+# Uncertainty quantification on COVID SEIR model
 
 This Matlab code provides the possibility to study the effect of parametric uncertainty in a simple SEIR-model that are typically used to study the spread of a virus outbreak like COVID-19.
 The SEIR model is taken from the website of Peter Forsyth (https://cs.uwaterloo.ca/~paforsyt/SEIR.html).
@@ -20,7 +19,13 @@ The output from the code is:
 
 
 Example runs with the SEIR model:
+
 ![Example runs with SEIR](results/Infected_Recovered_MC.png)
 
 Histogram of the peak in active cases, given uncertainty in all parameters:
-![Sensitivity analysis](results/PDF_QoI.png)
+
+![Histogram](results/PDF_QoI.png)
+
+Sensitivity of peak in active cases towards different parameters
+
+![Sensitivity](results/ActiveCases_8dim_MC_OLS_LARS_Sobol.png)
