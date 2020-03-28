@@ -20,4 +20,5 @@ The output from the code is:
 
 
 Example results:
-![Sensitivity analysis] (https://github.com/bsanderse/UQ_COVID/blob/master/results/PDF_QoI.png)
+
+![Sensitivity analysis](results/PDF_QoI.png)
