@@ -9,4 +9,15 @@ In order to run the code, you need:
 - install UQLab from https://www.uqlab.com/
 - execute UQ_corona.m
 
-The type of UQ analysis can be changed in UQ_corona.m. In this file one should also indicate the case-file to be loaded (e.g. Wuhan.m). The uncertain parameters and their distributions, which are case specific, are specified in this case-file. The assumed distributions should follow the UQLab specification.
+The type of UQ analysis can be changed in UQ_corona.m. Options are for example Monte Carlo or Polynomial Chaos Expansion (PCE). 
+In UQ_corona.m one should also indicate the case-file to be loaded (e.g. Wuhan.m). The uncertain parameters and their distributions, which are case specific, are specified in this case-file. The assumed distributions should follow the UQLab specification.
+The quantity of interest is currently set to the maximum number of active cases (E+I). This can be changed by changing the output in solve_corona.m.
+
+The output from the code is:
+- mean and standard deviation of the quantity of interest
+- histogram (pdf) of the quantity of interest
+- Sobol indices: these indicate the sensitivity of the quantity of interest with respect to the uncertain parameters.
+
+
+Example results:
+[Sensitivity analysis] results/PDF_QoI.png
