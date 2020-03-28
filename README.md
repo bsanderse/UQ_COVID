@@ -19,6 +19,8 @@ The output from the code is:
 - Sobol indices: these indicate the sensitivity of the quantity of interest with respect to the uncertain parameters.
 
 
-Example results:
+Example runs with the SEIR model:
+![Example runs with SEIR](results/Infected_Recovered_MC.png)
 
+Histogram of the peak in active cases, given uncertainty in all parameters:
 ![Sensitivity analysis](results/PDF_QoI.png)
